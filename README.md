@@ -1,5 +1,4 @@
 # Team_Diff
-an app that takes a RIOT summoner ID and calculates their teammates winrates over x games 
 
 ### An application that uses the RIOT API to pull game / player information and calculate the average win-rate of a given summoners teammates over x games.  Potentially has a leaderboard so users can enter their summoner name and compete for thre worst teammates against their friends.  Who is really hard stuck?   how has the carry pants?  lets find out!
 
@@ -13,3 +12,5 @@ an app that takes a RIOT summoner ID and calculates their teammates winrates ove
  -Will require persistence of user input in a database
 
 ## Tech stack
+node js
+express js
