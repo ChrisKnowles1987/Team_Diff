@@ -1,0 +1,29 @@
+{
+  "name": "team_diff",
+  "version": "1.0.0",
+  "description": "### An application that uses the RIOT API to pull game / player information and calculate the average win-rate of a given summoners teammates over x games.  Potentially has a leaderboard so users can enter their summoner name and compete for thre worst teammates against their friends.  Who is really hard stuck?   how has the carry pants?  lets find out!",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ChrisKnowles1987/Team_Diff.git"
+  },
+  "keywords": [
+    "Lol",
+    "league",
+    "of",
+    "legends",
+    "Team"
+  ],
+  "author": "Chris Knowles",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ChrisKnowles1987/Team_Diff/issues"
+  },
+  "homepage": "https://github.com/ChrisKnowles1987/Team_Diff#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
