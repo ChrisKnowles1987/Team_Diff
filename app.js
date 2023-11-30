@@ -41,14 +41,14 @@ async function get_matches(summoner_info) {
     }
   }
 
-async function get_participants(summoner_matches) {
+async function get_participants(summoner_matches, name) {
     try {
       let summoner_names = [];
       for (let match of summoner_matches) {
         const req_url = `${api_MATCH_v5}${match}`;
         const response = await axios.get(req_url, { headers:headers });
-        const teamId = get_team_id(response.data.info.participants);
-        summoner_names.push(get_teammates_with_matching_id(response.data.info.participants, teamId));
+        const teamId = get_team_id(response.data.info.participants, name);
+        summoner_names.push(get_teammates_with_matching_id(response.data.info.participants, teamId, name));
       }
       return summoner_names;
     } catch (error) {
@@ -74,14 +74,20 @@ function get_teammates_with_matching_id(participants, teamId, name) {
 
 app.post('/get-summoner-info', async (req, res) => {
     const name = req.body.name;
-    get_summoner_info(name).then(summoner_info=>{
-        get_matches(summoner_info).then(summoner_matches=>{
-            get_participants(summoner_matches).then(summoner_names =>{
-                console.log(summoner_names)
-            })
-        });
+    const summoner_info = await get_summoner_info(name);
+    const matches = await get_matches(summoner_info);
+    const teammates = await get_participants(matches, name);
+    console.log(teammates);
 
-    })
+
+    // get_summoner_info(name).then(summoner_info=>{
+    //     get_matches(summoner_info).then(summoner_matches=>{
+    //         get_participants(summoner_matches, name).then(summoner_names =>{
+    //             console.log(summoner_names)
+    //         })
+    //     });
+
+    // })
     
 
     // try {
