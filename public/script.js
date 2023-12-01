@@ -42,14 +42,10 @@ document.getElementById('summonerForm').addEventListener('submit', function(e) {
     .then(response => response.json())
     .then(response => {
          const table= createTable(response)
-         /**
-          TODO
-          CSS
-          stop apending table, create new table on request
-          add average of winrate above table
-          */
-
-        document.getElementById('result').appendChild(table)
+         document.getElementById('result').innerHTML = ''
+         document.getElementById('result').innerHTML = 'Processing'
+         document.getElementById('result').innerHTML = ''
+         document.getElementById('result').appendChild(table)
     })
     .catch((error) => {
         console.error('Error:', error);
