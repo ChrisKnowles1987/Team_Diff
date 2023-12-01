@@ -26,17 +26,8 @@ function createTable(data) {
   
     return table;
   }
-async function populateTable() {
-    const response = await fetch('get-summoner-info'); // Endpoint to get data
-    const data = await response.json();
-    // Function to create and populate the table with data
-    createTable(data);
-  }
-  
-  populateTable();
-  
-  
 
+  
 document.getElementById('summonerForm').addEventListener('submit', function(e) {
     e.preventDefault();
 
@@ -49,8 +40,16 @@ document.getElementById('summonerForm').addEventListener('submit', function(e) {
         body: JSON.stringify({ name: name }),
     })
     .then(response => response.json())
-    .then(data => {
-        document.getElementById('result').textContent = JSON.stringify(data);
+    .then(response => {
+         const table= createTable(response)
+         /**
+          TODO
+          CSS
+          stop apending table, create new table on request
+          add average of winrate above table
+          */
+
+        document.getElementById('result').appendChild(table)
     })
     .catch((error) => {
         console.error('Error:', error);
