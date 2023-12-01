@@ -72,30 +72,44 @@ function get_teammates_with_matching_id(participants, teamId, name) {
     return team_array;
   }
 
+  async function get_winrate(participants, queue_type) {
+    try {
+      let winrates = {};
+      for (let match of participants) {
+        for (let player of match) {
+          const req_url = `${api_LEAGUE_v4}${player}`;
+          const response = await axios.get(req_url, { headers });
+          for (let item of response.data) {
+            if (item.queueType === queue_type) {
+              let summonerName = item.summonerName;                 
+              let wins = item.wins || 0;
+              let losses = item.losses || 0;
+              let total_games = wins + losses;
+              if (total_games > 0) {
+                let winrate = `${((wins / total_games) * 100).toFixed(1)} %`;
+                winrates[summonerName] = winrate;
+              } else {
+                winrates[summonerName] = '0 %';  // Set winrate to 0% if no games played
+              }
+            }
+          }
+        }
+      }
+      return winrates;
+    } catch (error) {
+      console.error(error);
+    }
+  }
+  
+
 app.post('/get-summoner-info', async (req, res) => {
     const name = req.body.name;
     const summoner_info = await get_summoner_info(name);
     const matches = await get_matches(summoner_info);
     const teammates = await get_participants(matches, name);
-    console.log(teammates);
-
-
-    // get_summoner_info(name).then(summoner_info=>{
-    //     get_matches(summoner_info).then(summoner_matches=>{
-    //         get_participants(summoner_matches, name).then(summoner_names =>{
-    //             console.log(summoner_names)
-    //         })
-    //     });
-
-    // })
-    
-
-    // try {
-    //     const response = await axios.get(`${api_SUMMONER_v4}${name}`, { headers: headers });
-    //     res.json(response.data);
-    // } catch (error) {
-    //     res.status(500).json({ error: error.message });
-    // }
+    const winrates = await get_winrate(teammates, queueType ='RANKED_SOLO_5x5')
+    console.log(winrates);
+    res.json(winrates);
 });
 
 const port = 3000;
